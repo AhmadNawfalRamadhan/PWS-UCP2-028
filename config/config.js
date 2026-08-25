@@ -1,4 +1,5 @@
 require('dotenv').config();
+const pg = require('pg');
 
 module.exports = {
   development: {
@@ -21,6 +22,7 @@ module.exports = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT || 5432,
     dialect: process.env.DB_DIALECT || 'postgres',
+    dialectModule: pg, // <-- BERITAHU Sequelize untuk pakai modul pg ini
     dialectOptions: {
       ssl: {
         require: true,
