@@ -1,13 +1,20 @@
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+
+// Gunakan /tmp untuk Vercel (production), dan uploads/ untuk lokal
+const uploadDir = process.env.NODE_ENV === 'production' ? '/tmp' : 'uploads/';
+
+if (process.env.NODE_ENV !== 'production' && !fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
 
 // Konfigurasi penyimpanan file
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Simpan di folder /uploads
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
-    // Format nama file: timestamp + ekstensi asli (contoh: gambar-1714000000000.png)
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     const ext = path.extname(file.originalname);
     cb(null, file.fieldname + '-' + uniqueSuffix + ext);
