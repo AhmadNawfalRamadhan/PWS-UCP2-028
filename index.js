@@ -39,7 +39,7 @@ app.get('/', async (req, res) => {
 module.exports = app;
 
 // Jalankan app.listen hanya untuk lingkungan lokal
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'module') {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
